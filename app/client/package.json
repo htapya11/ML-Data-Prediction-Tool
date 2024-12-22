@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^1.7.9",
     "carbon-components": "^11.66.1",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
@@ -36,6 +37,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://localhost:5000",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
