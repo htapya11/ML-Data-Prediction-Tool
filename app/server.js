@@ -6,7 +6,10 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const port = process.env.PORT || 5000
+const wmlRoutes = require("./routes/api/wml")
+app.use("/api/wml", wmlRoutes)
+
+const port = process.env.PORT || 5001
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
