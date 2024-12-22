@@ -4,19 +4,23 @@
   "description": "A machine learning app.",
   "main": "server.js",
   "scripts": {
-    "start":"node server",
-    "server":"HOST=localhost nodemon server",
-    "client":"npm start --prefix client",
-    "dev":"concurrently \"npm run server\" \"npm run client\""
+    "start": "node server",
+    "server": "HOST=localhost nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Huzefa Tapya",
   "license": "ISC",
   "dependencies": {
+    "carbon-components": "^11.66.1",
+    "carbon-components-react": "^8.67.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "request": "^2.88.2",
-    "request-promise": "^4.2.6"
+    "request-promise": "^4.2.6",
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.4"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
