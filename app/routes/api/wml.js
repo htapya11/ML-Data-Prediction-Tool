@@ -1,6 +1,10 @@
 const express  = require('express')
 const router = express.Router()
 const request = require("request-promise")
+const utils = require("../../utils/utils")
+const fields = utils.fields
+const accountMap = utils.accountMap
+
 
 router.post('/score', async(req, res) => {
     
@@ -31,6 +35,42 @@ router.post('/score', async(req, res) => {
 
     const {year, month, costCenter, account} = req.body
     console.log(year, month, costCenter, account)
+
+    const template = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
+    template[fields.findIndex((val)=>val === `Year_${year}`)] = 1
+    template[fields.findIndex((val)=>val === `Month_${month}`)] = 1
+    template[fields.findIndex((val)=>val === `Account_ACC${account}`)] = 1
+    template[fields.findIndex((val)=>val === `Cost Center_${costCenter}`)] = 1
+    template[fields.findIndex((val)=>val === `Account Type_${accountMap[account]}`)] = 1
+
+    res.send(
+        {
+        "fields":fields,
+        "template":template
+        }
+    )
+
+    const scoring_options = {
+        method:"POST",
+        url:process.env.WML_SCORING_URL,
+        headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer $(access_token}`,
+            "ML-Instance-ID":process.env.WML_INSTANCE_ID
+        },
+        body:JSON.stringify({fields:fields, values:[template]})
+
+    }
+    let scoring_response = ""
+    try {
+        scoring_response = await request(scoring_options)
+        res.send(scoring_response)
+    } catch (error){
+        console.log(error)
+        res.send(error)
+    }
+
 })
 
 module.exports = router
